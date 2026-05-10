@@ -1,149 +1,119 @@
 <p align="center">
-  <img src="public/banner.png" alt="waoowaoo" width="600">
+  <img src="public/banner.png" alt="waoowaoo personal fork" width="600">
 </p>
 
-<h1 align="center">waoowaoo AI Video Studio</h1>
+<h1 align="center">waoowaoo Personal Fork</h1>
 
 <p align="center">
-  An AI-powered tool for creating short drama / comic videos — automatically generates storyboards, characters, and scenes from novel text, then assembles them into complete videos.
+  Engineering practice around an AI video production platform: agent workflows, edit-first generation, async tasks, worker runtime boundaries, and full-stack product delivery.
 </p>
 
 <p align="center">
-  <a href="README.md">中文文档</a> · <a href="https://www.waoowaoo.com/">Join Waitlist</a> · <a href="https://github.com/saturndec/waoowaoo/issues">Report Bug</a>
+  <a href="README.md">中文文档</a> ·
+  <a href="https://github.com/waooAI/waoowaoo">Original Project</a> ·
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </p>
 
 > [!IMPORTANT]
-> **Beta Notice**: This project is currently in its early beta stage. As it is currently a solo-developed project, some bugs and imperfections are to be expected. We are iterating rapidly — please stay tuned for frequent updates! We are committed to rolling out a massive roadmap of new features and optimizations, with the ultimate goal of becoming the top-tier solution in the industry. Your feedback and feature requests are highly welcome!
+> This repository is my personal fork of `waooAI/waoowaoo`. It is used as an engineering portfolio and learning record for internship/project work, including fixes, workflow refinements, and AI application engineering practice.<br>
+> This fork is not the official waoowaoo release channel and does not represent the original team's commercial product or roadmap. Original copyright and branding belong to the upstream maintainers. This fork follows the original CC BY-NC-SA 4.0 license: attribution, non-commercial use, and share-alike distribution.
 
 ---
 
-## ✨ Features
+## Project Context
 
-- 🎬 **AI Script Analysis** — Parse novels, extract characters, scenes & plot automatically
-- 🎨 **Character & Scene Generation** — Consistent AI-generated character and scene images
-- 📽️ **Storyboard Video** — Auto-generate shots and compose into complete videos
-- 🎙️ **AI Voiceover** — Multi-character voice synthesis
-- 🌐 **Bilingual UI** — Chinese / English, switch in the top-right corner
+`waoowaoo` is an AI film / short drama / comic-video production platform. The core workflow includes:
 
----
+- Story and script analysis
+- Character, scene, and prop asset generation
+- Storyboard, narration, visual prompt, and shot planning
+- AI provider calls for image, video, and voice generation
+- Async task processing, progress events, recovery, and frontend sync
+- Timeline editing and final video production
 
-## 🚀 Quick Start
-
-**Prerequisites**: Install [Docker Desktop](https://docs.docker.com/get-docker/)
-
-### Method 1: Pull Pre-built Image (Easiest)
-
-No need to clone the repository. Just download and run:
-
-```bash
-# Download docker-compose.yml
-curl -O https://raw.githubusercontent.com/saturndec/waoowaoo/main/docker-compose.yml
-
-# Start all services
-docker compose up -d
-```
-
-> ⚠️ This is a beta version. Database is not compatible between versions. To upgrade, clear old data first:
-
-```bash
-docker compose down -v
-docker rmi ghcr.io/saturndec/waoowaoo:latest
-curl -O https://raw.githubusercontent.com/saturndec/waoowaoo/main/docker-compose.yml
-docker compose up -d
-```
-
-> After starting, please **clear your browser cache** and log in again to avoid issues caused by stale cache.
-
-### Method 2: Clone & Docker Build (Full Control)
-
-```bash
-git clone https://github.com/saturndec/waoowaoo.git
-cd waoowaoo
-docker compose up -d
-```
-
-To update:
-```bash
-git pull
-docker compose down && docker compose up -d --build
-```
-
-### Method 3: Local Development (For Developers)
-
-```bash
-git clone https://github.com/saturndec/waoowaoo.git
-cd waoowaoo
-
-# Copy environment config (must be done before npm install)
-cp .env.example .env
-# ⚠️ Edit .env to fill in your AI API Keys (NEXTAUTH_URL defaults to http://localhost:3000, no change needed)
-
-npm install
-
-# Start infrastructure only
-docker compose up mysql redis minio -d
-
-# Run database migration
-npx prisma db push
-
-# Start development server
-npm run dev
-```
+This fork is focused on recording practical engineering work in a real AI application system, not on republishing the official product.
 
 ---
 
-Visit [http://localhost:13000](http://localhost:13000) (Method 1 & 2) or [http://localhost:3000](http://localhost:3000) (Method 3) to get started!
+## My Engineering Focus
 
-> The database is initialized automatically on first launch — no extra configuration needed.
+This branch records work around:
 
-> [!TIP]
-> **If you experience lag**: HTTP mode may limit browser connections. Install [Caddy](https://caddyserver.com/docs/install) for HTTPS:
-> ```bash
-> caddy run --config Caddyfile
-> ```
-> Then visit [https://localhost:1443](https://localhost:1443)
+- Reliability fixes for edit-first video generation
+- Prompt and context refinements for timeline editing agents
+- Director-style prompt adjustments for smoother storyboard-to-video generation
+- Workspace task polling and runtime boundary fixes
+- Agent / operation / task / worker responsibility boundaries
+- Local verification notes for async generation flows
 
----
-
-## 🔧 API Configuration
-
-After launching, go to **Settings** to configure your AI service API keys. A built-in guide is provided.
-
-> 💡 **Note**: Currently only official provider APIs are recommended. Third-party compatible formats (OpenAI Compatible) are not yet fully supported and will be improved in future releases.
+The repository is best understood as a portfolio sample for AI application engineering, agent workflows, async task systems, and full-stack collaboration.
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 15 + React 19
 - **Database**: MySQL + Prisma ORM
 - **Queue**: Redis + BullMQ
 - **Styling**: Tailwind CSS v4
 - **Auth**: NextAuth.js
+- **AI Runtime**: provider adapters, task queue, workers, SSE / status polling
 
 ---
 
-## 📦 Preview
+## Local Development
 
-![4f7b913264f7f26438c12560340e958c67fa833a](https://github.com/user-attachments/assets/fa0e9c57-9ea0-4df3-893e-b76c4c9d304b)
-![67509361cbe6809d2496a550de5733b9f99a9702](https://github.com/user-attachments/assets/f2fb6a64-5ba8-4896-a064-be0ded213e42)
-![466e13c8fd1fc799d8f588c367ebfa24e1e99bf7](https://github.com/user-attachments/assets/09bbff39-e535-4c67-80a9-69421c3b05ee)
-![c067c197c20b0f1de456357c49cdf0b0973c9b31](https://github.com/user-attachments/assets/688e3147-6e95-43b0-b9e7-dd9af40db8a0)
+> This fork is intended for study, review, and portfolio display. For the official project, see:<br>
+> <https://github.com/waooAI/waoowaoo>
+
+### Requirements
+
+- Node.js version from `.nvmrc`
+- Docker Desktop
+- AI provider API keys
+
+### Start Locally
+
+```bash
+git clone https://github.com/visenz0122/waoowaoo.git
+cd waoowaoo
+
+cp .env.example .env
+# Edit .env and add the required AI API keys and local service config.
+
+npm install
+docker compose up mysql redis minio -d
+npx prisma db push
+npm run dev
+```
+
+The usual local development entry is:
+
+- Web: <http://localhost:3000>
+- Docker service ports may vary based on `docker-compose.yml` and `.env.example`.
 
 ---
 
-## 🤝 Contributing
+## Preview
 
-This project is maintained by the core team. You're welcome to contribute by:
+![workspace canvas preview](workspace-canvas-edit-timeline-nodes.png)
 
-- 🐛 Filing [Issues](https://github.com/saturndec/waoowaoo/issues) — report bugs
-- 💡 Filing [Issues](https://github.com/saturndec/waoowaoo/issues) — propose features
-- 🔧 Submitting Pull Requests as references — we review every PR carefully for ideas, but the team implements fixes internally rather than merging external PRs directly
+![workspace board rendered](workspace-edit-first-board-rendered.png)
 
 ---
 
-**Made with ❤️ by waoowaoo team**
+## Resume Summary
 
-## Star History
+Suggested summary:
 
-[![Star History Chart](https://api.star-history.com/svg?repos=saturndec/waoowaoo&type=date&legend=top-left)](https://www.star-history.com/#saturndec/waoowaoo&type=date&legend=top-left)
+> Personal fork and engineering practice based on the open-source AI video production platform waoowaoo. Worked on edit-first video generation, agent prompt workflows, async task polling, worker runtime boundaries, and frontend state synchronization across a multi-stage AI content generation pipeline using Next.js, Prisma, BullMQ, and AI provider adapters.
+
+---
+
+## Attribution and License
+
+- Original project: <https://github.com/waooAI/waoowaoo>
+- Fork owner: <https://github.com/visenz0122>
+- License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+This fork preserves attribution to the upstream project and marks personal modifications clearly. Without explicit permission from the original rights holders, this fork should not be used commercially or distributed as an official release.

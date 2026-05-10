@@ -1,161 +1,119 @@
 <p align="center">
-  <a href="https://www.waoowaoo.com/">
-    <img src="images/cta-banner.png" alt="🚀 探索 AI 影视的下一代创作流 | 立即加入 waoowaoo 在线网页版内测候补" width="800">
-  </a>
+  <img src="public/banner.png" alt="waoowaoo personal fork" width="600">
+</p>
+
+<h1 align="center">waoowaoo Personal Fork</h1>
+
+<p align="center">
+  AI 影视生产平台工程化实践：围绕短剧/漫画视频生成链路、Agent 工作流、异步任务与编辑优先体验的个人二次开发版本。
 </p>
 
 <p align="center">
-  <img src="public/banner.png" alt="waoowaoo" width="600">
-</p>
-
-<h1 align="center">waoowaoo AI 影视 Studio</h1>
-
-<p align="center">
-  一款基于 AI 技术的短剧/漫画视频制作工具，支持从小说文本自动生成分镜、角色、场景，并制作成完整视频。
-</p>
-
-<p align="center">
-  <a href="README_en.md">English</a> · <a href="https://www.waoowaoo.com/">加入内测候补</a> · <a href="https://github.com/saturndec/waoowaoo/issues">反馈问题</a>
+  <a href="README_en.md">English</a> ·
+  <a href="https://github.com/waooAI/waoowaoo">Original Project</a> ·
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </p>
 
 > [!IMPORTANT]
-> ⚠️ **测试版声明**：本项目目前处于测试初期阶段，由于暂时只有我一个人开发，存在部分 bug 和不完善之处。我们正在快速迭代更新中，**欢迎进群反馈问题和需求，及时关注项目更新！目前更新会非常频繁，后续会增加大量新功能以及优化效果，我们的目标是成为行业最强AI工具！**
-
-<img src="https://github.com/user-attachments/assets/2b3fc495-9812-493a-8dbc-5bec4757df31" width="30%">
-
----
-## ✨ 功能特性
-
-- 🎬 **AI 剧本分析** — 自动解析小说，提取角色、场景、剧情
-- 🎨 **角色 & 场景生成** — AI 生成一致性人物和场景图片
-- 📽️ **分镜视频制作** — 自动生成分镜头并合成视频
-- 🎙️ **AI 配音** — 多角色语音合成
-- 🌐 **多语言支持** — 中文 / 英文界面，右上角一键切换
+> 这是 `waooAI/waoowaoo` 的个人 fork，用于记录我在实习/项目协作中的工程化理解、功能修复和二次开发实践。<br>
+> 本仓库不是 waoowaoo 官方发布渠道，也不代表原团队的商业版本或官方路线图。原项目版权与品牌归原项目维护者所有，本 fork 遵循原仓库的 CC BY-NC-SA 4.0 许可要求：署名、非商业、相同方式共享。
 
 ---
 
-## 🚀 快速开始
+## 项目定位
 
-**前提条件**：安装 [Docker Desktop](https://docs.docker.com/get-docker/)
+`waoowaoo` 是一个面向 AI 影视/短剧/漫画视频生产的全流程平台。核心链路覆盖：
 
-### 方式一：拉取预构建镜像（最简单）
+- 小说/故事输入与剧本结构化分析
+- 角色、场景、道具等资产生成与管理
+- 分镜、画面描述、旁白与镜头规划
+- 图片/视频/配音等 AI provider 调用
+- 异步任务、进度事件、失败恢复与前端状态同步
+- 时间线编辑与最终视频产出
 
-无需克隆仓库，下载即用：
-
-```bash
-# 下载 docker-compose.yml
-curl -O https://raw.githubusercontent.com/saturndec/waoowaoo/main/docker-compose.yml
-
-# 启动所有服务
-docker compose up -d
-```
-
-> ⚠️ 当前为测试版，版本间数据库不兼容。升级请先清除旧数据：
-
-```bash
-docker compose down -v
-docker rmi ghcr.io/saturndec/waoowaoo:latest
-curl -O https://raw.githubusercontent.com/saturndec/waoowaoo/main/docker-compose.yml
-docker compose up -d
-```
-
-> 启动后请**清空浏览器缓存**并重新登录，避免旧版本缓存导致异常。
-
-### 方式二：克隆仓库 + Docker 构建（完全控制）
-
-```bash
-git clone https://github.com/saturndec/waoowaoo.git
-cd waoowaoo
-docker compose up -d
-```
-
-更新版本：
-```bash
-git pull
-docker compose down && docker compose up -d --build
-```
-
-### 方式三：本地开发模式（开发者）
-
-```bash
-git clone https://github.com/saturndec/waoowaoo.git
-cd waoowaoo
-
-# 复制环境变量配置文件（必须在 npm install 之前完成）
-cp .env.example .env
-# ⚠️ 编辑 .env，填入你的 AI API Key（NEXTAUTH_URL 默认已是 http://localhost:3000，无需修改）
-
-npm install
-
-# 只启动基础设施
-# 注意：docker-compose.yml 将服务映射到非标准端口，.env.example 已按此预设
-mysql:13306  redis:16379  minio:19000
-docker compose up mysql redis minio -d
-
-# 初始化数据库表结构（首次必须执行，跳过会导致启动后报错）
-npx prisma db push
-
-# 启动开发服务器
-npm run dev
-```
-
-> [!WARNING]
-> 跳过 `npx prisma db push` 会导致所有数据库表不存在，启动后报错 `The table 'tasks' does not exist`。请务必先运行此命令再启动开发服务器。
+这个 fork 的重点不是重新发布官方产品，而是沉淀我在真实工程项目里做过的 AI 应用工程实践。
 
 ---
 
-访问 [http://localhost:13000](http://localhost:13000)（方式一、二）或 [http://localhost:3000](http://localhost:3000)（方式三）开始使用！
+## 我的工程化改造重点
 
-> 首次启动会自动完成数据库初始化，无需任何额外配置。
+我在这个分支里主要围绕以下方向做了修改和验证：
 
-> [!TIP]
-> **如果遇到网页卡顿**：HTTP 模式下浏览器可能限制并发连接。可安装 [Caddy](https://caddyserver.com/docs/install) 启用 HTTPS：
-> ```bash
-> caddy run --config Caddyfile
-> ```
-> 然后访问 [https://localhost:1443](https://localhost:1443)
+- 修复 edit-first 视频生成链路中的任务可靠性问题
+- 优化时间线编辑 Agent 的提示词、上下文组织和回归问题
+- 调整导演风格与镜头提示词，使分镜到视频生成的衔接更稳定
+- 修复 workspace task polling 与运行时边界问题
+- 梳理 Agent/operation/task/worker 之间的职责边界
+- 结合本地验证记录补充对异步任务链路的工程理解
 
----
-
-## 🔧 API 配置
-
-启动后进入**设置中心**配置 AI 服务的 API Key，内置配置教程。
-
-> 💡 **注意**：目前仅推荐使用各服务商官方 API，第三方兼容格式（OpenAI Compatible）尚不完善，后续版本会持续优化。
+这些内容更适合作为 AI 应用工程、Agent workflow、异步任务系统和全栈工程协作的实践样例，而不是作为独立商业产品宣传。
 
 ---
 
-## 📦 技术栈
+## 技术栈
 
 - **框架**: Next.js 15 + React 19
 - **数据库**: MySQL + Prisma ORM
 - **队列**: Redis + BullMQ
 - **样式**: Tailwind CSS v4
 - **认证**: NextAuth.js
+- **AI 链路**: provider adapter、任务队列、worker、SSE/状态轮询
 
 ---
 
-## 📦 页面功能预览
+## 本地开发
 
-![4f7b913264f7f26438c12560340e958c67fa833a](https://github.com/user-attachments/assets/fa0e9c57-9ea0-4df3-893e-b76c4c9d304b)
-![67509361cbe6809d2496a550de5733b9f99a9702](https://github.com/user-attachments/assets/f2fb6a64-5ba8-4896-a064-be0ded213e42)
-![466e13c8fd1fc799d8f588c367ebfa24e1e99bf7](https://github.com/user-attachments/assets/09bbff39-e535-4c67-80a9-69421c3b05ee)
-![c067c197c20b0f1de456357c49cdf0b0973c9b31](https://github.com/user-attachments/assets/688e3147-6e95-43b0-b9e7-dd9af40db8a0)
+> 本 fork 面向学习、复盘和作品集展示。若你只想体验官方版本，请优先查看原项目：<br>
+> <https://github.com/waooAI/waoowaoo>
+
+### 前提条件
+
+- Node.js 版本以 `.nvmrc` 为准
+- Docker Desktop
+- 可用的 AI provider API Key
+
+### 启动步骤
+
+```bash
+git clone https://github.com/visenz0122/waoowaoo.git
+cd waoowaoo
+
+cp .env.example .env
+# 编辑 .env，填入需要的 AI API Key 和本地服务配置
+
+npm install
+docker compose up mysql redis minio -d
+npx prisma db push
+npm run dev
+```
+
+默认开发入口通常是：
+
+- Web: <http://localhost:3000>
+- Docker 组合服务入口可能使用仓库配置中的其他端口，请以 `docker-compose.yml` 和 `.env.example` 为准。
 
 ---
 
-## 🤝 参与方式
+## 页面预览
 
-本项目由核心团队独立维护。欢迎你通过以下方式参与：
+![workspace canvas preview](workspace-canvas-edit-timeline-nodes.png)
 
-- 🐛 提交 [Issue](https://github.com/saturndec/waoowaoo/issues) 反馈 Bug
-- 💡 提交 [Issue](https://github.com/saturndec/waoowaoo/issues) 提出功能建议
-- 🔧 提交 Pull Request 供参考 — 我们会认真审阅每一个 PR 的思路，但最终由团队自行实现修复，不会直接合并外部 PR
+![workspace board rendered](workspace-edit-first-board-rendered.png)
 
 ---
 
-**Made with ❤️ by waoowaoo team**
+## 简历描述参考
 
-## Star History
+可以将这个项目概括为：
 
-[![Star History Chart](https://api.star-history.com/svg?repos=saturndec/waoowaoo&type=date&legend=top-left)](https://www.star-history.com/#saturndec/waoowaoo&type=date&legend=top-left)
+> 基于开源 AI 影视生产平台 waoowaoo 的个人 fork 与工程化实践，重点参与 edit-first 视频生成、Agent prompt workflow、异步任务轮询、worker runtime 边界与前端状态同步等链路修复；在真实项目中实践 Next.js、Prisma、BullMQ、AI provider adapter 与多阶段内容生成流程。
+
+---
+
+## 来源与许可
+
+- Original project: <https://github.com/waooAI/waoowaoo>
+- Fork owner: <https://github.com/visenz0122>
+- License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+本 fork 保留原项目署名，并标明本仓库包含个人二次开发改动。未经原项目权利方授权，不应将本 fork 用于商业用途或作为官方发布版本分发。
