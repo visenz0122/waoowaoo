@@ -5,7 +5,7 @@
 <h1 align="center">waoowaoo Personal Fork</h1>
 
 <p align="center">
-  Engineering practice around an AI video production platform: agent workflows, edit-first generation, async tasks, worker runtime boundaries, and full-stack product delivery.
+  My AI video production engineering fork: edit-first generation, Agent workflows, async task runtime, provider adapters, and product-grade delivery practice.
 </p>
 
 <p align="center">
@@ -15,38 +15,52 @@
 </p>
 
 > [!IMPORTANT]
-> This repository is my personal fork of `waooAI/waoowaoo`. It is used as an engineering portfolio and learning record for internship/project work, including fixes, workflow refinements, and AI application engineering practice.<br>
-> This fork is not the official waoowaoo release channel and does not represent the original team's commercial product or roadmap. Original copyright and branding belong to the upstream maintainers. This fork follows the original CC BY-NC-SA 4.0 license: attribution, non-commercial use, and share-alike distribution.
+> This is my personal fork and portfolio repository. The README focuses on the engineering work I practice in this fork, instead of retelling the upstream product introduction.<br>
+> To avoid attribution and licensing issues, the source and license notice remain at the bottom: this fork is not an official release channel and follows CC BY-NC-SA 4.0 attribution, non-commercial, and share-alike requirements.
 
 ---
 
-## Project Context
+## How I Use This Fork
 
-`waoowaoo` is an AI film / short drama / comic-video production platform. The core workflow includes:
+I use this project as a real AI application engineering workspace, not as a single-model demo. My focus is not "can one prompt call generate something", but whether the generation flow can be maintained, observed, tested, and explained:
 
-- Story and script analysis
-- Character, scene, and prop asset generation
-- Storyboard, narration, visual prompt, and shot planning
-- AI provider calls for image, video, and voice generation
-- Async task processing, progress events, recovery, and frontend sync
-- Timeline editing and final video production
+- Multi-stage content flow from story, storyboard, shot intent, and video generation
+- Edit-first creation UX instead of one-shot black-box generation
+- Agent prompt workflow and tool context organization
+- Provider adapter boundaries for image, video, and voice generation
+- Task submission, worker execution, status polling, failure visibility, and frontend refresh
+- Local verification, regression testing, documentation, and portfolio presentation
 
-This fork is focused on recording practical engineering work in a real AI application system, not on republishing the official product.
+In my resume and GitHub profile, I position this repository as: **a personal fork and engineering practice project for an AI video production system**.
 
 ---
 
-## My Engineering Focus
+## What This Fork Demonstrates
 
-This branch records work around:
+### 1. Edit-first video generation
+
+I focus on letting users move between timeline, storyboard, shot intent, and generated results, instead of submitting one prompt and waiting for a black-box result. This shows frontend workspace design, generation state management, task execution, and result writeback working together.
+
+### 2. Agent workflow and prompt engineering
+
+This fork records refinements around timeline-editing agents, director style, shot prompts, and generation context. The goal is to make Agent output usable inside the real product workflow, not only inside a chat window.
+
+### 3. Async task and worker runtime
+
+AI video, image, and voice generation are long-running tasks. I use this project to practice task lifecycle design: task submission, record creation, queue dispatch, worker execution, polling/event sync, failure visibility, and rollback boundaries.
+
+### 4. Full-stack engineering coordination
+
+This fork demonstrates how a Next.js workspace, Prisma data layer, Redis/BullMQ queues, AI provider adapters, runtime boundaries, and verification checks fit together. This is the direction I am currently building toward: **AI application engineering, not isolated model calls**.
+
+## Main Work Areas
 
 - Reliability fixes for edit-first video generation
 - Prompt and context refinements for timeline editing agents
 - Director-style prompt adjustments for smoother storyboard-to-video generation
 - Workspace task polling and runtime boundary fixes
 - Agent / operation / task / worker responsibility boundaries
-- Local verification notes for async generation flows
-
-The repository is best understood as a portfolio sample for AI application engineering, agent workflows, async task systems, and full-stack collaboration.
+- README and profile positioning for resume, interview, and portfolio use
 
 ---
 
@@ -62,9 +76,6 @@ The repository is best understood as a portfolio sample for AI application engin
 ---
 
 ## Local Development
-
-> This fork is intended for study, review, and portfolio display. For the official project, see:<br>
-> <https://github.com/waooAI/waoowaoo>
 
 ### Requirements
 
@@ -106,7 +117,7 @@ The usual local development entry is:
 
 Suggested summary:
 
-> Personal fork and engineering practice based on the open-source AI video production platform waoowaoo. Worked on edit-first video generation, agent prompt workflows, async task polling, worker runtime boundaries, and frontend state synchronization across a multi-stage AI content generation pipeline using Next.js, Prisma, BullMQ, and AI provider adapters.
+> Personal AI video production system fork and engineering practice project. Worked on edit-first video generation, Agent prompt workflows, async task polling, worker runtime boundaries, provider adapters, and frontend state synchronization across a multi-stage AI content generation pipeline using Next.js, Prisma, BullMQ, Redis, and AI provider integrations.
 
 ---
 
