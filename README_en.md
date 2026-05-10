@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="public/banner.png" alt="waoowaoo personal fork" width="600">
-</p>
-
 <h1 align="center">waoowaoo Personal Fork</h1>
 
 <p align="center">
